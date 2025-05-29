@@ -1,7 +1,7 @@
 'use strict'
 
 window.addEventListener('load', function () {
-    $(btnAccedi).on('click', async function () {
+    $('#btnAccedi').on('click', async function () {
         const username = $('#username').val()
         const password = $('#password').val()
 
