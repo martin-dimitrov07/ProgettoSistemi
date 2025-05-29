@@ -1,5 +1,7 @@
 'use strict'
 
+const IP_SERVER = ""
+
 window.addEventListener('load', function () {
     $('#btnAccedi').on('click', async function () {
         const username = $('#username').val()
