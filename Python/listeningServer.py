@@ -1,7 +1,6 @@
-# servizio_server -> listeningServer.py
-
 import socket
 import senderServer
+import threading
 
 users = []  # Lista per tenere traccia degli utenti connessi
 
@@ -22,5 +21,6 @@ def avvia_server():
         #     users.append(addr)
         dati = conn.recv(1024).decode()
         messaggio, IPDest = dati.split("|")
-        senderServer.invia_messaggio(messaggio, IPDest)
+        thread = threading.Thread(target=senderServer.invia_messaggio, args=(messaggio, IPDest))
+        thread.start()
         conn.close()

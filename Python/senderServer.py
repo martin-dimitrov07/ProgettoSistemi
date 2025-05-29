@@ -2,6 +2,8 @@ import socket
 
 def invia_messaggio(messaggio, IPDest):
     s = socket.socket()
-    s.connect((IPDest, 6001))  # IP e porta del server
-    s.send(messaggio.encode()) 
+    print(IPDest + " SENDER SERVER")
+    s.connect((IPDest, 6100))  # IP e porta del server
+    dati = f"{messaggio}|{IPDest}"
+    s.send(dati.encode()) 
     s.close()
