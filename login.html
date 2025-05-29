@@ -4,8 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login</title>
-  <link rel="stylesheet" href="login.css" />
-  <script src="./login.js"></script>
+
+  <!-- BOOTSTRAP e JQUERY -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+		<!-- SPECIFICI -->
+		<link rel="stylesheet" href="login.css">		
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.9.0/axios.min.js"></script>
+		<script src="JS/libreria.js"></script>
+		<script src="JS/login.js"></script>
+
 </head>
 <body>
   <div class="login-container">
@@ -19,7 +29,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required />
       </div>
-      <button type="submit" class="login-btn">Accedi</button>
+      <button type="submit" class="login-btn" id="btnAccedi">Accedi</button>
     </form>
   </div>
 </body>
