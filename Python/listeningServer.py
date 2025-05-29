@@ -1,8 +1,12 @@
-# servizio_server.py
+# servizio_server -> listeningServer.py
 
 import socket
+import senderServer
+
+users = []  # Lista per tenere traccia degli utenti connessi
 
 def avvia_server():
+    global users
     print("[SERVER] Avvio server socket...")
 
     s = socket.socket()
@@ -14,9 +18,9 @@ def avvia_server():
     while True:
         conn, addr = s.accept()
         print(f"[SERVER] Connessione da {addr}")
+        # if addr not in users:
+        #     users.append(addr)
         dati = conn.recv(1024).decode()
-        print(f"[SERVER] Ricevuto: {dati}")
-        conn.send(f"Hai detto: {dati}".encode())
+        messaggio, IPDest = dati.split("|")
+        senderServer.invia_messaggio(messaggio, IPDest)
         conn.close()
-
-avvia_server()
