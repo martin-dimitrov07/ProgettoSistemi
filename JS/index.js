@@ -2,8 +2,6 @@
 
 let IP_DEST = "";
 
-let index = 0;
-
 const ips = {
     "MartinDimitrov": "192.168.1.3",
     "DanieleGotta": "192.168.1.99",
@@ -84,7 +82,6 @@ window.onload = function(){
             .then(response => response.json())
             .then(data => {
                 let messaggi = data.messaggi;
-                index = data.length - 1
                 mostraMessaggi(messaggi);
                 
             })
@@ -102,6 +99,8 @@ window.onload = function(){
     {
         const divMessages = document.querySelector(".messages");
 
+        divMessages.innerHTML = "";
+
         // divMessages.innerHTML = "";
             // <div class="messageReceived">
             //     <div class="card rec">
@@ -116,16 +115,18 @@ window.onload = function(){
             //     </div>
             // </div>
 
-            if(messaggi[index].tipo == "ricevuto")
+        for(const messaggio of messaggi)
+        {
+            if(messaggio.tipo == "ricevuto")
             {
                 divMessages.innerHTML += `
                     <div class="messageReceived">
                         <div class="card rec">
                             <div class="textBox">
                                 <div class="textContent">
-                                    <p class="h1">${usernameDestinario}</p>
+                                    <p class="h1">${Object.keys(messaggi).filter(key => messaggi[key] === IP_DEST)}</p>
                                 </div>
-                                <p class="p">${messaggi[index].messaggio}</p>
+                                <p class="p">${messaggio.messaggio}</p>
                                 <div>
                                 </div>
                             </div>
@@ -140,34 +141,34 @@ window.onload = function(){
                         <div class="card sent">
                             <div class="textBox">
                             <div class="textContent">
-                                <p class="h1">${usernameMittente}</p>
+                                <p class="h1">${Object.keys(ips).filter(key => ips[key] === messaggio.mittente)}</p>
                             </div>
-                            <p class="p">${messaggi[index].messaggio}</p>
+                            <p class="p">${messaggio.messaggio}</p>
                             <div>
                             </div>
                         </div>
                     </div>
                 `
             }
+        }
     }
 
-    // setInterval(() => { 
-    //     fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         let messaggi = data.messaggi;
-    //         index = data.length - 1
-    //         mostraMessaggi(messaggi);
-    //     })
-    //     .catch(error => {
-    //         console.error("Errore durante la richiesta:", error);
-    //     });
-    // }, 2000)
+    setInterval(() => { 
+        fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let messaggi = data.messaggi;
+            mostraMessaggi(messaggi);
+        })
+        .catch(error => {
+            console.error("Errore durante la richiesta:", error);
+        });
+    }, 2000)
 
 }
 
