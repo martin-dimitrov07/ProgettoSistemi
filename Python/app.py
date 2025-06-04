@@ -9,12 +9,11 @@ CORS(app) # Permette richieste da origini diverse (es. pagine HTML locali)
 
 @app.route("/api/invia", methods=["POST"])
 def invia():
+    # inviare messaggi
     messaggio = request.json.get("messaggio")
     IPDest = request.json.get("IPDest")
     thread_invia = threading.Thread(target=sender.invia_messaggio, args=(messaggio, IPDest))
     thread_invia.start()
-
-    sender.invia_messaggio(messaggio, IPDest)
     return jsonify({"status": "Messaggio inviato"})
 
 
