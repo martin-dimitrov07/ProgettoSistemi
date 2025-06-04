@@ -44,8 +44,7 @@ def invia():
         )
         
         return jsonify({
-            "status": "Messaggio inviato",
-            "messaggio": messaggio_inviato
+            "status": "Messaggio inviato"
         })
         
     except Exception as e:
@@ -78,13 +77,13 @@ def ascolta_client():
 def get_messaggi():
     # tutti i messaggi per IP
     try:
-        # ip_filtro_mittente = request.args.get("IPMittente")
         messaggi = messageStorage.get_messaggi()
 
         print(messaggi)
         
         return jsonify({
-            "messaggi": messaggi
+            "messaggi": messaggi,
+            "length": len(messaggi)
         })
         
     except Exception as e:

@@ -5,6 +5,8 @@ receivedMessages = []
 lockMessage = threading.Lock()
 
 def aggiungi_messaggio(mittente, messaggio, destinatario, tipo="ricevuto"):
+    global receivedMessages
+    
     with lockMessage:
         newMessage = {
             "mittente": mittente,
@@ -17,5 +19,7 @@ def aggiungi_messaggio(mittente, messaggio, destinatario, tipo="ricevuto"):
         return newMessage
     
 def get_messaggi():
+    global receivedMessages
+
     with lockMessage:
         return receivedMessages

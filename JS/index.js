@@ -2,6 +2,8 @@
 
 let IP_DEST = "";
 
+let index = 0;
+
 const ips = {
     "MartinDimitrov": "192.168.1.3",
     "DanieleGotta": "192.168.1.99",
@@ -82,6 +84,7 @@ window.onload = function(){
             .then(response => response.json())
             .then(data => {
                 let messaggi = data.messaggi;
+                index = data.length - 1
                 mostraMessaggi(messaggi);
                 
             })
@@ -99,9 +102,7 @@ window.onload = function(){
     {
         const divMessages = document.querySelector(".messages");
 
-        divMessages.innerHTML = "";
-
-        for (const messaggio of messaggi) {
+        // divMessages.innerHTML = "";
             // <div class="messageReceived">
             //     <div class="card rec">
             //         <div class="textBox">
@@ -115,7 +116,7 @@ window.onload = function(){
             //     </div>
             // </div>
 
-            if(messaggio.tipo == "ricevuto")
+            if(messaggi[index].tipo == "ricevuto")
             {
                 divMessages.innerHTML += `
                     <div class="messageReceived">
@@ -124,7 +125,7 @@ window.onload = function(){
                                 <div class="textContent">
                                     <p class="h1">${usernameDestinario}</p>
                                 </div>
-                                <p class="p">${messaggio.messaggio}</p>
+                                <p class="p">${messaggi[index].messaggio}</p>
                                 <div>
                                 </div>
                             </div>
@@ -141,32 +142,32 @@ window.onload = function(){
                             <div class="textContent">
                                 <p class="h1">${usernameMittente}</p>
                             </div>
-                            <p class="p">${messaggio.messaggio}</p>
+                            <p class="p">${messaggi[index].messaggio}</p>
                             <div>
                             </div>
                         </div>
                     </div>
                 `
             }
-        }
     }
 
-    setInterval(() => { 
-        fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            let messaggi = data.messaggi;
-            mostraMessaggi(messaggi);
-        })
-        .catch(error => {
-            console.error("Errore durante la richiesta:", error);
-        });
-    }, 2000)
+    // setInterval(() => { 
+    //     fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         let messaggi = data.messaggi;
+    //         index = data.length - 1
+    //         mostraMessaggi(messaggi);
+    //     })
+    //     .catch(error => {
+    //         console.error("Errore durante la richiesta:", error);
+    //     });
+    // }, 2000)
 
 }
 

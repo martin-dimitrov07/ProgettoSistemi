@@ -112,7 +112,7 @@ def income_message(conn, addr):
 
         if data:
             # messaggio formato: messaggio|IP_destinatario
-            if len(data.split("|")) >= 1:
+            if len(data.split("|", 1)) == 2:
                 messaggio, IPDest = data.split("|")
 
                 if messaggio:
