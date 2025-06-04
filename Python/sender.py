@@ -7,16 +7,16 @@ def invia_messaggio(messaggio, IPDest, porta):
         
     try:
         # Crea socket
-        my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        my_socket.settimeout(costants.SOCKET_TIMEOUT)
-        
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(costants.SOCKET_TIMEOUT)
+
         # Connetti al destinatario
-        my_socket.connect((IPDest, porta))
+        s.connect((str(IPDest), int(porta)))
         
         # Gestione dati
         dati = f"{messaggio}|{IPDest}"
-        my_socket.send(dati.encode('utf-8'))
-        my_socket.close()
+        s.send(dati.encode('utf-8'))
+        s.close()
         
         print(f"[SENDER] Messaggio inviato a {IPDest}:{porta}")
         return "Messaggio inviato con successo"

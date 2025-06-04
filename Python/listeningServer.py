@@ -71,7 +71,7 @@ def income_message(conn, addr):
         if data:
             # messaggio formato: messaggio|IP_destinatario
             if len(data.split("|")) >= 1:
-                messaggio, IPDest = data.split("|").strip()
+                messaggio, IPDest = data.split("|")
                 
                 if messaggio:
                     messageStorage.aggiungi_messaggio(

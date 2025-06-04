@@ -1,5 +1,5 @@
 SERVER_HOST = "0.0.0.0" # broadcast
-SOCKET_PORT = 6000
+SOCKET_PORT = 6100
 IP_SERVER = "192.168.1.3"
 SOCKET_TIMEOUT = 5 # 10 secondi timeout
 LISTEN_TIMEOUT = 7 # 7s
