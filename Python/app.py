@@ -36,7 +36,7 @@ def ascolta_server():
 @app.route("/api/messaggi", methods=["GET"])
 def get_messaggi():
     IP = request.args.get("IP")
-    messaggi = {}
+    messaggi = []
     for m in messaggi_ricevuti:
         if m["mittente"] == IP:
             messaggi.append(m)

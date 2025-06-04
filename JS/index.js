@@ -1,8 +1,8 @@
-const IP_SERVER = "192.168.1.3"
+const IP_SERVER = "10.0.101.25"
 
 let users = []
 
-let messageStart = "Connessione stabilita"
+// let messageStart = "Connessione stabilita"
 
 window.onload = function(){
 
@@ -13,8 +13,8 @@ window.onload = function(){
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "messaggio": messageStart,
-                "IPDest": "192.168.1.3",
+                "messaggio": document.querySelector("input[type='text']").value,
+                "IPDest": "10.88.230.194",
             })
         })
         .then(response => response.json())
@@ -50,11 +50,28 @@ window.onload = function(){
     })
     .then(response => response.json())
     .then(data => {
+        document.querySelector("messageSent").textContent = data.messaggio;
         console.log(data.messaggio);
     })
     .catch(error => {
         console.error("Errore durante la richiesta:", error);
     });
 
+    document.getElementById("ascolta").addEventListener("click", function(){
+        fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // document.querySelector("messageSent").textContent = data.messaggio;
+            console.log(data.messaggi);
+        })
+        .catch(error => {
+            console.error("Errore durante la richiesta:", error);
+        });
+    })
 }
 
