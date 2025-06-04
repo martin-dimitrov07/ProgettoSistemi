@@ -55,7 +55,7 @@ def invia():
 
 
 @app.route("/api/ascoltaServer", methods=["POST"])
-def ascolta():
+def ascolta_server():
     # avvio listening del server
     try:
         result = listening.start_listening_server()
@@ -66,23 +66,21 @@ def ascolta():
     
     
 @app.route("/api/ascolta", methods=["POST"])
-def ascolta():
-    # avvio listening del server
+def ascolta_client():
     try:
         result = listening.start_listening_client()
         return jsonify({"status": result})
     except Exception as e:
         print(f"[API-CLIENTASCOLTA] Error: {e}")
         return jsonify({"error": f"Errore nell'avvio del server: {str(e)}"}), 500
-    
 
 
 @app.route("/api/messaggi", methods=["GET"])
 def get_messaggi():
     # tutti i messaggi per IP
     try:
-        ip_filtro_mittente = request.args.get("IPMittente")
-        messaggi = messageStorage.get_messaggi(ip_filtro_mittente)
+        # ip_filtro_mittente = request.args.get("IPMittente")
+        messaggi = messageStorage.get_messaggi()
         
         return jsonify({
             "messaggi": messaggi

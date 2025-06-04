@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./CSS/index.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.9.0/axios.min.js"></script>
+  <script src="./JS/libreria.js"></script>
   <script src="./JS/ip_server.js"></script>
   <script src="./JS/index.js"></script>
   <title>Chat</title>
 </head>
+
 <body>
   <div class="container">
     <!-- Sidebar utenti -->
@@ -21,18 +26,40 @@
 
     <!-- Finestra chat -->
     <div class="chat-window">
-      <div class="chat-header">Chat con </div>
+      <div class="chat-header"></div>
       <div class="messages">
-        <div class="messageReceived"></div>
-        <div class="messageSent"></div>
+
+        <!-- <div class="messageReceived">
+          <div class="card rec">
+            <div class="textBox">
+              <div class="textContent">
+                <p class="h1">persona1</p>
+              </div>
+              <p class="p">ricevuto</p>
+              <div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="messageSent">
+          <div class="card sent">
+            <div class="textBox">
+              <div class="textContent">
+                <p class="h1">persona2</p>
+              </div>
+              <p class="p">mandato vkhbefvbjwhrvbwjph avbphwjbvpebvpebphvbw3prv bpwivbpeivbpi3bvi b3vribi3vbihvb jhdbvie
+                ejfhvbiqvb iqjfh qeiuurvcug3h q3iurghf43hg0 q3iughf04h3</p>
+            </div>
+          </div>
+        </div> -->
+
       </div>
       <div class="chat-input">
         <input type="text" placeholder="Scrivi un messaggio...">
-        <button id="invia">Invia</button>
-        <button id="ascolta">Ascolta Server</button>
-        <button id="ascoltaServer">Ascolta per Server</button>
+        <button id="btnInvia">Invia</button>
       </div>
     </div>
   </div>
 </body>
+
 </html>

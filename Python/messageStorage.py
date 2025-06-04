@@ -16,9 +16,6 @@ def aggiungi_messaggio(mittente, messaggio, destinatario, tipo="ricevuto"):
         receivedMessages.append(newMessage)
         return newMessage
     
-def get_messaggi(ipMittente):
+def get_messaggi():
     with lockMessage:
-        return [
-            m for m in receivedMessages 
-            if m.get("mittente") == ipMittente
-        ]
+        return receivedMessages

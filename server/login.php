@@ -3,7 +3,7 @@ header("Content-type:application/json; charset-utf-8");
 require("mysqli.php");
 
 // si definisce questa costante della durata di 30 secondi, questo è il modo per definire le varibili costanti, sempre espresso in secondi
-define("TIMEOUT", 30);
+define("TIMEOUT", 30* 1000000);
 
 $conn = OpenConnection();
 

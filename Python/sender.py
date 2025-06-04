@@ -1,10 +1,11 @@
 import socket
 import costants
+import utilities
 
 def invia_messaggio(messaggio, IPDest, porta):
     if porta is None:
         porta = costants.SOCKET_PORT
-        
+
     try:
         # Crea socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
