@@ -5,7 +5,7 @@ let IP_DEST = "";
 const ips = {
     "MartinDimitrov": "192.168.1.3",
     "DanieleGotta": "192.168.1.99",
-    "EdoardoCasanova": "192.1.104" 
+    "EdoardoCasanova": "192.168.1.104" 
 }
 
 let usernameMittente;
@@ -59,6 +59,99 @@ window.onload = function(){
     });
 
     document.getElementById("btnInvia").addEventListener("click", () => {
+        fetch(`http://${IP_SERVER}:5000/api/invia`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                messaggio: document.querySelector("input[type='text']").value,
+                IPDest: IP_DEST
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.status);
+
+            fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                let messaggi = data.messaggi;
+                mostraMessaggi(messaggi);
+                
+            })
+            .catch(error => {
+                console.error("Errore durante la richiesta:", error);
+            });
+
+        })
+        .catch(error => {
+            console.error("Errore durante la richiesta:", error);
+        });
+    })
+
+    function mostraMessaggi(messaggi)
+    {
+        const divMessages = document.querySelector(".messages");
+
+        divMessages.innerHTML = "";
+
+        for (const messaggio of messaggi) {
+            // <div class="messageReceived">
+            //     <div class="card rec">
+            //         <div class="textBox">
+            //         <div class="textContent">
+            //             <p class="h1">persona1</p>
+            //         </div>
+            //         <p class="p">ricevuto</p>
+            //         <div>
+            //         </div>
+            //         </div>
+            //     </div>
+            // </div>
+
+            if(messaggio.tipo == "ricevuto")
+            {
+                divMessages.innerHTML += `
+                    <div class="messageReceived">
+                        <div class="card rec">
+                            <div class="textBox">
+                                <div class="textContent">
+                                    <p class="h1">${usernameDestinario}</p>
+                                </div>
+                                <p class="p">${messaggio.messaggio}</p>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+            else
+            {
+                divMessages.innerHTML += `
+                    <div class="messageSent">
+                        <div class="card sent">
+                            <div class="textBox">
+                            <div class="textContent">
+                                <p class="h1">${usernameMittente}</p>
+                            </div>
+                            <p class="p">${messaggio.messaggio}</p>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        }
+    }
+
+    setInterval(() => { 
         fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
             method: "GET",
             headers: {
@@ -68,64 +161,12 @@ window.onload = function(){
         .then(response => response.json())
         .then(data => {
             let messaggi = data.messaggi;
-
-            const divMessages = document.querySelector(".messages");
-
-            divMessages.innerHTML = "";
-
-            for (const messaggio of messaggi) {
-                // <div class="messageReceived">
-                //     <div class="card rec">
-                //         <div class="textBox">
-                //         <div class="textContent">
-                //             <p class="h1">persona1</p>
-                //         </div>
-                //         <p class="p">ricevuto</p>
-                //         <div>
-                //         </div>
-                //         </div>
-                //     </div>
-                // </div>
-
-                if(messaggio.tipo == "ricevuto")
-                {
-                    divMessages.innerHTML += `
-                        <div class="messageReceived">
-                            <div class="card rec">
-                                <div class="textBox">
-                                    <div class="textContent">
-                                        <p class="h1">${usernameDestinario}</p>
-                                    </div>
-                                    <p class="p">${messaggio.messaggio}</p>
-                                    <div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
-                }
-                else
-                {
-                    divMessages.innerHTML += `
-                        <div class="messageSent">
-                            <div class="card sent">
-                                <div class="textBox">
-                                <div class="textContent">
-                                    <p class="h1">${usernameMittente}</p>
-                                </div>
-                                <p class="p">${messaggio.messaggio}</p>
-                                <div>
-                                </div>
-                            </div>
-                        </div>
-                    `
-                }
-            }
+            mostraMessaggi(messaggi);
         })
         .catch(error => {
             console.error("Errore durante la richiesta:", error);
         });
-    })
+    }, 2000)
 
 }
 

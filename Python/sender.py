@@ -1,15 +1,15 @@
 import socket
-import costants
+import constants
 import utilities
 
 def invia_messaggio(messaggio, IPDest, porta):
     if porta is None:
-        porta = costants.SOCKET_PORT
+        porta = constants.SOCKET_PORT
 
     try:
         # Crea socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(costants.SOCKET_TIMEOUT)
+        s.settimeout(constants.SOCKET_TIMEOUT)
 
         # Connetti al destinatario
         s.connect((str(IPDest), int(porta)))

@@ -1,6 +1,6 @@
 import socket
 import threading
-import costants
+import constants
 import messageStorage
 
 server_running = False
@@ -18,7 +18,7 @@ def start_listening_server():
     server_thread.daemon = True
     server_thread.start()
     
-    print(f"[LISTENING-SERVER] Server avviato su {costants.SERVER_HOST}:{costants.SOCKET_PORT}")
+    print(f"[LISTENING-SERVER] Server avviato su {constants.SERVER_HOST}:{constants.SOCKET_PORT}")
     return "Server di ascolto avviato"
 
 def start_listening_client():
@@ -33,15 +33,15 @@ def listenLoop():
         # Crea e configura socket
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # permette il riutilizzo della porta anche se è in stato TIME_WAIT (occupata).
-        client_socket.bind((costants.IP_SERVER, costants.SOCKET_PORT))
+        client_socket.bind((constants.IP_SERVER, constants.SOCKET_PORT))
         client_socket.listen(5) # numero massimo di connessioni in attesa di accept()
         
-        print(f"[LISTENING-CLIENT] In ascolto sulla porta {costants.SOCKET_PORT}")
+        print(f"[LISTENING-CLIENT] In ascolto sulla porta {constants.SOCKET_PORT}")
         
         while True:
             try:
                 # Timeout per permettere controllo del server_running
-                client_socket.settimeout(costants.LISTEN_TIMEOUT) # quanto tempo aspettare prima che dia errore
+                client_socket.settimeout(constants.LISTEN_TIMEOUT) # quanto tempo aspettare prima che dia errore
                 conn, addr = client_socket.accept()
                 
                 # Gestisci il messaggio in un thread separato
@@ -72,15 +72,15 @@ def listenServerLoop():
         # Crea e configura socket
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # permette il riutilizzo della porta anche se è in stato TIME_WAIT (occupata).
-        server_socket.bind((costants.SERVER_HOST, costants.SOCKET_PORT))
+        server_socket.bind((constants.SERVER_HOST, constants.SOCKET_PORT))
         server_socket.listen(5) # numero massimo di connessioni in attesa di accept()
         
-        print(f"[LISTENING-SERVER] In ascolto sulla porta {costants.SOCKET_PORT}")
+        print(f"[LISTENING-SERVER] In ascolto sulla porta {constants.SOCKET_PORT}")
         
         while server_running:
             try:
                 # Timeout per permettere controllo del server_running
-                server_socket.settimeout(costants.LISTEN_TIMEOUT) # quanto tempo aspettare prima che dia errore
+                server_socket.settimeout(constants.LISTEN_TIMEOUT) # quanto tempo aspettare prima che dia errore
                 conn, addr = server_socket.accept()
                 
                 # Gestisci il messaggio in un thread separato
@@ -109,12 +109,12 @@ def income_message(conn, addr):
     try:
         # Ricevi dati
         data = conn.recv(1024).decode('utf-8')
-        
+
         if data:
             # messaggio formato: messaggio|IP_destinatario
             if len(data.split("|")) >= 1:
                 messaggio, IPDest = data.split("|")
-                
+
                 if messaggio:
                     messageStorage.aggiungi_messaggio(
                         mittente=addr[0],

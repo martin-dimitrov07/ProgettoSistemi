@@ -1,4 +1,3 @@
-import socket
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import threading
@@ -6,7 +5,7 @@ import utilities
 import messageStorage
 import sender
 import listening
-import costants
+import constants
 
 app = Flask(__name__)
 CORS(app) # Permette richieste da origini diverse (es. pagine HTML locali)
@@ -29,13 +28,13 @@ def invia():
             return jsonify({"error": "Il messaggio non può essere vuoto"}), 400 # 400: Bad Request
         if not ip_dest:
             return jsonify({"error": "IP destinatario obbligatorio"}), 400
-        
+
         # Invia messaggio in modo asincrono
         # sender.invia_messaggio_async(messaggio, ip_dest)
-        thread = threading.Thread(target=sender.invia_messaggio, args=( messaggio, ip_dest, costants.SOCKET_PORT ))
+        thread = threading.Thread(target=sender.invia_messaggio, args=( messaggio, ip_dest, constants.SOCKET_PORT ))
         thread.daemon = True # chiude automaticamente quando il thread termina
         thread.start()
-        
+
         # Aggiungi il messaggio inviato al storage locale
         messaggio_inviato = messageStorage.aggiungi_messaggio(
             mittente=utilities.GetIp(),
@@ -81,6 +80,8 @@ def get_messaggi():
     try:
         # ip_filtro_mittente = request.args.get("IPMittente")
         messaggi = messageStorage.get_messaggi()
+
+        print(messaggi)
         
         return jsonify({
             "messaggi": messaggi
