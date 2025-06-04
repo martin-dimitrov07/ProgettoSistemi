@@ -1,9 +1,11 @@
 'use strict'
 
-const IP_SERVER = ""
-
 window.addEventListener('load', function () {
-    $('#btnAccedi').on('click', async function () {
+    $("form").eq(0).on("submit", Login)
+
+    async function Login(event) {
+        event.preventDefault()
+
         const username = $('#username').val()
         const password = $('#password').val()
 
@@ -15,13 +17,15 @@ window.addEventListener('load', function () {
             fetch("https://api.ipify.org?format=json")
                 .then(response => response.json())
                 .then(data => {
-                    console.log("IP pubblico del client:", data.ip)
+                    window.location.href = "./server.html";
                 })
         }
         else {
-			let rq = await inviaRichiesta("POST", "server/login.php", { username, password }).catch(errore)
+            let rq = await inviaRichiesta("POST", "server/login.php", { username, password }).catch(errore)
 
-            console.log(risposta.data[0])
+            if (rq.data == "ok") {
+                window.location.href = "./index.html"
+            }
         }
-    })
+    }
 })

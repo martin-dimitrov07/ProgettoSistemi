@@ -1,7 +1,7 @@
 <?php
 function openConnection(): mysqli
 {
-    define("DB_NAME", "dischi");
+    define("DB_NAME", "utenti");
     // In questo modo si definisce che si sta usando un database che si trova sul nostro computer
     // Se invece il database fosse su un altro computer, è necessario inserirne l'indirizzo IP
     define("DB_HOST", "localhost");

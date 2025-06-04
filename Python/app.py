@@ -5,7 +5,7 @@ import threading
 import utilities
 import messageStorage
 import sender
-import listeningServer
+import listening
 import costants
 
 app = Flask(__name__)
@@ -54,23 +54,28 @@ def invia():
         return jsonify({"error": f"Errore interno: {str(e)}"}), 500 #500: Internal error
 
 
-@app.route("/api/serverAscolta", methods=["POST"])
+@app.route("/api/ascoltaServer", methods=["POST"])
 def ascolta():
     # avvio listening del server
     try:
-        result = listeningServer.start_listening_server()
+        result = listening.start_listening_server()
         return jsonify({"status": result})
     except Exception as e:
         print(f"[API-SERVERASCOLTTA] Error: {e}")
         return jsonify({"error": f"Errore nell'avvio del server: {str(e)}"}), 500
+    
+    
+@app.route("/api/ascolta", methods=["POST"])
+def ascolta():
+    # avvio listening del server
+    try:
+        result = listening.start_listening_client()
+        return jsonify({"status": result})
+    except Exception as e:
+        print(f"[API-CLIENTASCOLTA] Error: {e}")
+        return jsonify({"error": f"Errore nell'avvio del server: {str(e)}"}), 500
+    
 
-
-
-# @app.route("/api/ascolta", methods=["POST"])
-# def ascolta_server():
-#     messaggio = listening.ascolta_server()
-
-#     return jsonify({"messaggio": messaggio})
 
 @app.route("/api/messaggi", methods=["GET"])
 def get_messaggi():

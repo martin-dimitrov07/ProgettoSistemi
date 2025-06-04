@@ -22,7 +22,7 @@ $data = ExecuteQuery($conn, $sql);
 if (count($data) == 0) {
     http_response_code(401);
     die("Username errato");
-} else if ($data[0]["Pwd"] != $pwd) {
+} else if ($data[0]["password"] != $pwd) {
     http_response_code(401);
     die("Password errata");
 
@@ -31,11 +31,11 @@ if (count($data) == 0) {
     session_start();
 
     // time() restiiituisce data e ora correnti in secondi, timeout è un timeout di durata della sessione che è deciso da noi
-    $_SESSION ["Scadenza"] = time() + TIMEOUT;
-    $_SESSION ["NomeUtente"] = $data[0]["userName"];
+    $_SESSION["Scadenza"] = time() + TIMEOUT;
+    $_SESSION["NomeUtente"] = $data[0]["userName"];
 
     // Restituisce sempre il nome che vogliamo dare al cookie di sessione
-    setcookie(session_name(), session_id(), $_SESSION ["Scadenza"], "/");
+    setcookie(session_name(), session_id(), $_SESSION["Scadenza"], "/");
 
     http_response_code(200);
     echo (json_encode("ok"));
