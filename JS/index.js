@@ -98,60 +98,47 @@ window.onload = function(){
     function mostraMessaggi(messaggi)
     {
         const divMessages = document.querySelector(".messages");
-
         divMessages.innerHTML = "";
-
-        // divMessages.innerHTML = "";
-            // <div class="messageReceived">
-            //     <div class="card rec">
-            //         <div class="textBox">
-            //         <div class="textContent">
-            //             <p class="h1">persona1</p>
-            //         </div>
-            //         <p class="p">ricevuto</p>
-            //         <div>
-            //         </div>
-            //         </div>
-            //     </div>
-            // </div>
 
         for(const messaggio of messaggi)
         {
             if(messaggio.tipo == "ricevuto")
             {
+                const nomeMittente = Object.entries(ips).find(([_, ip]) => ip === messaggio.mittente)?.[0] || messaggio.mittente;
+
                 divMessages.innerHTML += `
                     <div class="messageReceived">
                         <div class="card rec">
                             <div class="textBox">
                                 <div class="textContent">
-                                    <p class="h1">${Object.keys(messaggi).filter(key => messaggi[key] === IP_DEST)}</p>
+                                    <p class="h1">${nomeMittente}</p>
                                 </div>
                                 <p class="p">${messaggio.messaggio}</p>
-                                <div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                `
+                `;
             }
             else
             {
+                const nomeDestinatario = Object.entries(ips).find(([_, ip]) => ip === IP_DEST)?.[0] || IP_DEST;
+
                 divMessages.innerHTML += `
                     <div class="messageSent">
                         <div class="card sent">
                             <div class="textBox">
-                            <div class="textContent">
-                                <p class="h1">${Object.keys(ips).filter(key => ips[key] === messaggio.mittente)}</p>
-                            </div>
-                            <p class="p">${messaggio.messaggio}</p>
-                            <div>
+                                <div class="textContent">
+                                    <p class="h1">${nomeDestinatario}</p>
+                                </div>
+                                <p class="p">${messaggio.messaggio}</p>
                             </div>
                         </div>
                     </div>
-                `
+                `;
             }
         }
     }
+
 
     setInterval(() => { 
         fetch(`http://${IP_SERVER}:5000/api/messaggi`, {
